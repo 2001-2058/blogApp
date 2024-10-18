@@ -3,7 +3,7 @@ import { connection } from './postgres/postgres.js';
 import router from './view/routes.js';
 import cors from 'cors'
 const app=express();
-app.user(express.json())
+app.use(express.json())
 app.use(cors())
 app.use (router)
 
