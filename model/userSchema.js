@@ -21,7 +21,11 @@ export const createUserModel=async(sequelize)=>{
          type:DataTypes.STRING,
         allowNull:false,
         unique:true
-    }
+    },
+    profilePicture: {
+        type: DataTypes.STRING, // Storing file path
+        allowNull: true, // It's optional initially
+      },
 });
 return User;
 
