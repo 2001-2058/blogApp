@@ -1,22 +1,20 @@
+// fileUpload.js
 import multer from 'multer';
 import path from 'path';
 
-// Set storage engine
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'uploads/'); // Folder to store files
+    cb(null, 'uploads/');
   },
   filename: function (req, file, cb) {
-    cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname)); // Create unique file name
+    cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
   }
 });
 
-// Initialize upload
-export const upload = multer({
+const upload = multer({
   storage: storage,
-  limits: { fileSize: 1000000 }, // 1MB file size limit
+  limits: { fileSize: 5 * 1024 * 1024 }, // Set to 5 MB
   fileFilter: function (req, file, cb) {
-    // Check file type
     const filetypes = /jpeg|jpg|png/;
     const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
     const mimetype = filetypes.test(file.mimetype);
@@ -24,7 +22,9 @@ export const upload = multer({
     if (mimetype && extname) {
       return cb(null, true);
     } else {
-      cb('Error: Images Only!');
+      cb(new Error('Error: Images Only!'));
     }
-  },
+  }
 });
+
+export { upload };
