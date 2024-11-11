@@ -85,6 +85,7 @@ export const deleteEmp = async (req, res) => {
 export const uploadProfilePic = async (req, res) => {
     upload(req, res, async function (err) {
         if (err) {
+            console.log(err)
             return res.status(500).json({ error: "File upload failed" });
         }
 
